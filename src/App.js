@@ -24,7 +24,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
     }
-  },[])
+  }, [])
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -41,6 +41,24 @@ const App = () => {
       }, 5000)
     }
   }
+
+  const addBlog = (e) => {
+    e.preventDefault()
+    blogService.setToken(user.token)
+    const title = document.querySelector('.title').value
+    const author = document.querySelector('.author').value
+    const url = document.querySelector('.url').value
+
+    const newBlog = {
+      title,
+      author,
+      url
+    }
+
+    blogService.create(newBlog)
+      .then(returnedBlog => setBlogs(blogs.concat(returnedBlog)))
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -51,9 +69,28 @@ const App = () => {
         Password
         <input type="text" name="Password" value={password} onChange={({ target }) => setPassword(target.value)} />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit" className="login-btn">Login</button>
     </form>
   )
+
+  const blogForm = () => (
+    <form onSubmit={addBlog} className="blogForm">
+      <h3>Create a blog</h3>
+      <div>
+        <div className="label">Title</div>
+        <input type="text" name="title" className="title" />
+      </div>
+      <div>
+        <div className="label">Author</div>
+        <input type="text" name="author" className="author" />
+      </div>
+      <div>
+        <div className="label">URL</div>
+        <input type="text" name="url" className="url" />
+      </div>
+      <button type="submit" className="create-btn">Create</button>
+    </form>)
+
 
   if (user === null) {
     return (
@@ -75,11 +112,16 @@ const App = () => {
       <h2>Blogs</h2>
       <Notification message={errorMessage} />
       <div>
-        <p>{user.name} Logged-in</p>
-        <button type="button" onClick={handleLogout}>Log out</button>
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
+        <div className="logged-div">
+          <p>{user.name} Logged-in</p>
+          <button type="button" onClick={handleLogout} className="logout-btn">Log out</button>
+        </div>
+        {blogForm()}
+        <div className="bloglist">
+          {blogs.map(blog =>
+            <Blog key={blog.id} blog={blog} />
+          )}
+        </div>
       </div>
     </div>
   )

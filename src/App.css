@@ -7,6 +7,28 @@ body {
   margin: 20px;
 }
 
+.error {
+  margin-bottom: 15px;
+}
+
+.logged-div{
+  display: flex;
+  align-items: center;
+}
+
+.bloglist{
+  margin-top: 20px;
+}
+
+.blog{
+  margin-bottom: 8px; 
+}
+
+.label{
+  display: inline-block;
+  width:50px;
+}
+
 h2 {
   font-family: 'Roboto', 'Oxygen', 'Cantarell', 'Fira Sans', sans-serif;
 }
@@ -44,8 +66,19 @@ button {
 
 button:hover {
   background-color:#4700C6;
+  cursor: pointer;
 }
 
 button:active {
   background-color: #5701ED;
+}
+
+.logout-btn{
+  margin: 0 0 0 15px;
+  padding: 6px 8px;
+}
+
+.create-btn{
+  align-self: center;
+  margin-left: 60px;
 }

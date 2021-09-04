@@ -18,9 +18,9 @@
   "plugins": ["react"],
   "rules": {
     "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "linebreak-style": 0
   }
 }
