@@ -24,10 +24,18 @@ input[type="text"]:focus{
   border: 2px solid #5701ED;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 button {
   color: white;
   border: none;
   padding:8px 15px;
+  margin-bottom: 20px;
   background-color: #5701ED;
   border-radius: 4px;
   letter-spacing:1.3px;
