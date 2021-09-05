@@ -10,7 +10,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -26,6 +26,12 @@ const App = () => {
     }
   }, [])
 
+  const notifyWith = (message, type) => {
+    setNotification({ message, type })
+    setTimeout(() => {
+      setNotification(null)
+    }, 4000)
+  }
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
@@ -35,28 +41,30 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (err) {
-      setErrorMessage('Wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      notifyWith('Wrong username o password', 'error')  
     }
   }
 
   const addBlog = (e) => {
     e.preventDefault()
     blogService.setToken(user.token)
-    const title = document.querySelector('.title').value
-    const author = document.querySelector('.author').value
-    const url = document.querySelector('.url').value
+    let title = document.querySelector('.title')
+    let author = document.querySelector('.author')
+    let url = document.querySelector('.url')
 
     const newBlog = {
-      title,
-      author,
-      url
+      title: title.value,
+      author: author.value,
+      url: url.value
     }
 
     blogService.create(newBlog)
       .then(returnedBlog => setBlogs(blogs.concat(returnedBlog)))
+    
+    notifyWith(`A new blog '${newBlog.title}' by '${newBlog.author}' has been added`, 'success')
+    title.value = ''
+    author.value = ''
+    url.value = ''
   }
 
   const loginForm = () => (
@@ -96,7 +104,7 @@ const App = () => {
     return (
       <div className="blogs">
         <h2>Log in to application</h2>
-        <Notification message={errorMessage} />
+        <Notification notification={notification} />
         {loginForm()}
       </div>
     )
@@ -110,7 +118,7 @@ const App = () => {
   return (
     <div className="blogs">
       <h2>Blogs</h2>
-      <Notification message={errorMessage} />
+      <Notification notification={notification} />
       <div>
         <div className="logged-div">
           <p>{user.name} Logged-in</p>
