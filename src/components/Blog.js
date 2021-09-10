@@ -28,7 +28,7 @@ const Blog = ({ blog, blogs, setBlogs, setNotification, user }) => {
             setNotification
           )
         }).catch(() => notifyWith(
-          `'${blog.title}' was already removed from server`,
+          `'${blog.title}' can't be deleted`,
           'error',
           setNotification
         ))

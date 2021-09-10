@@ -3,7 +3,6 @@ import React,{ useState } from 'react'
 import loginService from '../services/login'
 import notifyWith from '../utils/notifyWith'
 
-
 const LoginForm = ({setUser, setNotification}) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')

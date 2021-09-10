@@ -41,6 +41,7 @@ const App = () => {
       url: url.value
     }
     blogFormRef.current.toggleVisibility()
+    blogService.setToken(user.token)
     blogService.create(newBlog)
       .then(returnedBlog => setBlogs(blogs.concat(returnedBlog)))
 
