@@ -10,7 +10,8 @@ body {
 
 .error,
 .success,
-.likeMessage {
+.likeMessage,
+.removeNotification {
   color: white;
   margin-bottom: 15px;
   padding: 15px;
@@ -20,6 +21,10 @@ body {
 
 .success {
   background-color: #17a05d;
+}
+
+.removeNotification {
+  background-color: #4700c6;
 }
 
 .logged-div {
@@ -90,6 +95,11 @@ button:active {
 .logout-btn {
   margin-left: 15px;
   padding: 6px 8px;
+  background-color: #38009f;
+}
+
+.logout-btn:hover {
+  background-color: #5701ed;
 }
 
 .create-btn {
@@ -122,13 +132,24 @@ button:active {
   align-items: center;
 }
 
-.likeButton {
+.likeButton,
+.removeButton {
   margin-left: 10px;
   font-size: 60%;
   padding: 5px 10px;
   background-color: #ff47a4;
 }
 
+.removeButton {
+  background-color: #2b0079;
+  color: white;
+  margin: 0;
+}
+
 .likeButton:hover {
   background-color: #ff19a4;
+}
+
+.removeButton:hover {
+  background-color: #38009f;
 }
