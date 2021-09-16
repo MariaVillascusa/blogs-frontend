@@ -40,7 +40,7 @@ const Blog = ({ blog, blogs, setBlogs, setNotification, user }) => {
       {!visible ?
         (
           <div>
-            <strong>{blog.title}</strong>
+            <strong>{blog.title}</strong><span> - {blog.author}</span>
             <button className='viewButton' onClick={() => setVisible(true)}>View</button>
           </div>
         ) :
@@ -48,14 +48,16 @@ const Blog = ({ blog, blogs, setBlogs, setNotification, user }) => {
           <div id={blog.id}>
             <div>
               <strong>{blog.title}</strong>
+              <span> - {blog.author}</span>
               <button className='hideButton' onClick={() => setVisible(false)}>Hide</button>
             </div>
-            <div>Author: {blog.author}</div>
+            
             <div>URL: {blog.url}</div>
             <div className='likes'>
               Likes: {likes - 1}
               <button className='likeButton' onClick={handleLikes}>Like</button>
             </div>
+            <div>{blog.user.username}</div>
             {(user.username === blog.user.username) ?
               (
                 <div>
