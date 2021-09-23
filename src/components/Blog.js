@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
 import notifyWith from '../utils/notifyWith'
+import Button from './Button'
 
 const Blog = ({ blog, blogs, setBlogs, setNotification, user }) => {
   const [visible, setVisible] = useState(false)
@@ -39,29 +40,29 @@ const Blog = ({ blog, blogs, setBlogs, setNotification, user }) => {
     <div className="blog">
       {!visible ?
         (
-          <div>
+          <div className='blogTitle'>
             <strong>{blog.title}</strong><span> - {blog.author}</span>
-            <button className='viewButton' onClick={() => setVisible(true)}>View</button>
+            <Button classButton='viewButton' handle={() => setVisible(true)} textLabel='View' />
           </div>
         ) :
         (
           <div id={blog.id}>
-            <div>
+            <div className='blogTitle'>
               <strong>{blog.title}</strong>
               <span> - {blog.author}</span>
-              <button className='hideButton' onClick={() => setVisible(false)}>Hide</button>
+              <Button classButton='hideButton' handle={() => setVisible(false)} textLabel='Hide' />
             </div>
             
             <div>URL: {blog.url}</div>
             <div className='likes'>
               Likes: {likes - 1}
-              <button className='likeButton' onClick={handleLikes}>Like</button>
+              <Button classButton='likeButton' handle={handleLikes} textLabel='Like'/>
             </div>
             <div>{blog.user.username}</div>
             {(user.username === blog.user.username) ?
               (
                 <div>
-                  <button className='removeButton' onClick={handleRemove}>Remove</button>
+                  <Button classButton='removeButton' handle={handleRemove} textLabel='Remove'/>
                 </div>
               ) : ''
             }
