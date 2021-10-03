@@ -26,5 +26,5 @@ test('<BlogForm />', ()=> {
   })
   fireEvent.submit(form)
 
-  expect(addBlog.mock.calls).toHaveLength(1)
+  expect(addBlog.mock.calls).toHaveLength(1) 
 })
