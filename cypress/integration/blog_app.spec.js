@@ -6,6 +6,7 @@ describe('Blog app', function () {
       username: 'user',
       password: 'password'
     }
+
     cy.request('POST', 'http://localhost:3003/api/users/', user)
     cy.visit('http://localhost:3000')
   })
@@ -18,15 +19,15 @@ describe('Blog app', function () {
 
   describe('Login',function() {
     it('succeeds with correct credentials', function() {
-      cy.get('[name="Username"]').type('user')
-      cy.get('[name="Password"]').type('password')
+      cy.get('input[name="Username"]').type('user')
+      cy.get('input[name="Password"]').type('password')
       cy.get('.login-btn').click()
       cy.contains('Log out')
       cy.contains('New blog')
     })
     it('fails with wrong credentials', function() {
-      cy.get('[name="Username"]').type('user')
-      cy.get('[name="Password"]').type('wrongpassword')
+      cy.get('input[name="Username"]').type('user')
+      cy.get('input[name="Password"]').type('wrongpassword')
       cy.get('.login-btn').click()
       cy.get('.error')
         .should('contain', 'Wrong username o password')
@@ -40,9 +41,9 @@ describe('Blog app', function () {
 
     it('A blog can be created', function() {
       cy.contains('New blog').click()
-      cy.get('[name="title"]').type('New blog from Cypress')
-      cy.get('[name="author"]').type('myauthor')
-      cy.get('[name="url"]').type('myurl')
+      cy.get('input[name="title"]').type('New blog from Cypress')
+      cy.get('input[name="author"]').type('myauthor')
+      cy.get('input[name="url"]').type('myurl')
       cy.get('.create-btn').click()
       cy.contains('New blog from Cypress')
     })
@@ -60,7 +61,22 @@ describe('Blog app', function () {
         cy.contains('Likes: 0')
         cy.get('.likeButton').click()
         cy.contains('Likes: 1')
-
+      })
+      it('it can be deleted by the user who create it', function() {
+        cy.get('.viewButton').click()
+        cy.get('.removeButton').click()
+        cy.get('.removeNotification').should('contain', 'removed')
+      })
+      it('it can´t be deleted by other users', function() {
+        cy.get('.logout-btn').click()
+        cy.request('POST', 'http://localhost:3003/api/users/', {
+          name: 'other',
+          username: 'otheruser',
+          password: 'otherpassword'
+        })
+        cy.login({username: 'otheruser', password: 'otherpassword'})
+        cy.get('.viewButton').click()
+        cy.get('.removeButton').should('not.exist')
       })
     })
   })
