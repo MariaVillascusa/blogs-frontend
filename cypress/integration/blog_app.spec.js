@@ -33,7 +33,7 @@ describe('Blog app', function () {
         .and('have.css', 'background-color', 'rgb(221, 80, 68)')
     })
   })
-  describe.only('When logged in', function() {
+  describe('When logged in', function() {
     beforeEach(function() {
       cy.login({ username: 'user', password: 'password'})
     })
@@ -45,6 +45,23 @@ describe('Blog app', function () {
       cy.get('[name="url"]').type('myurl')
       cy.get('.create-btn').click()
       cy.contains('New blog from Cypress')
+    })
+
+    describe.only('and a blog exists', function() {
+      beforeEach(function() {
+        cy.createBlog({
+          title:'Second blog from Cypress',
+          author:'my user',
+          url:'http://www.newbcypress.com'
+        })
+      })
+      it('it can be liked by a user',function() {
+        cy.get('.viewButton').click()
+        cy.contains('Likes: 0')
+        cy.get('.likeButton').click()
+        cy.contains('Likes: 1')
+
+      })
     })
   })
 })
