@@ -48,7 +48,7 @@ describe('Blog app', function () {
       cy.contains('New blog from Cypress')
     })
 
-    describe.only('and a blog exists', function() {
+    describe('and a blog exists', function() {
       beforeEach(function() {
         cy.createBlog({
           title:'Second blog from Cypress',
@@ -78,7 +78,31 @@ describe('Blog app', function () {
         cy.get('.viewButton').click()
         cy.get('.removeButton').should('not.exist')
       })
-    })
+      it.only('blogs ar in order depending on the likes', function() {
+        cy.createBlog({
+          title:'Third blog from Cypress',
+          author:'my user',
+          url:'http://www.newbcypress.com'
+        })
+        cy.createBlog({
+          title:'Fourth blog from Cypress',
+          author:'my user',
+          url:'http://www.newbcypress.com'
+        })
+        cy.get('.viewButton:first').click()
+        cy.get('.likeButton').click()
+        cy.get('.hideButton').click()
+        cy.get('.viewButton:last').click()
+        cy.get('.likeButton').click()
+        cy.get('.likeButton').click()
+        cy.visit('http://localhost:3000')
+        cy.get('.viewButton:first').click()
+        cy.contains('Likes: 2')
+        cy.get('.hideButton').click()
+        cy.get('.viewButton:last').click()
+        cy.contains('Likes: 0')
+      })
+    }) 
   })
 })
 
