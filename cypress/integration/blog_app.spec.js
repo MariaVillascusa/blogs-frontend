@@ -33,5 +33,19 @@ describe('Blog app', function () {
         .and('have.css', 'background-color', 'rgb(221, 80, 68)')
     })
   })
+  describe.only('When logged in', function() {
+    beforeEach(function() {
+      cy.login({ username: 'user', password: 'password'})
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('New blog').click()
+      cy.get('[name="title"]').type('New blog from Cypress')
+      cy.get('[name="author"]').type('myauthor')
+      cy.get('[name="url"]').type('myurl')
+      cy.get('.create-btn').click()
+      cy.contains('New blog from Cypress')
+    })
+  })
 })
 
